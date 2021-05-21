@@ -33,10 +33,11 @@ class Buttons extends StatefulWidget {
 class _ButtonsState extends State<Buttons> {
   var userInput = "";
   var userOutput = "";
+  //Array of button
   final List<String> buttons = [
     "C",
-    "AC",
-    "(",
+    "⌫",
+    "()",
     "/",
     "9",
     "8",
@@ -53,7 +54,7 @@ class _ButtonsState extends State<Buttons> {
     ".",
     "0",
     "=",
-  ];
+  ]; //⌫
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +71,7 @@ class _ButtonsState extends State<Buttons> {
                     SizedBox(
                       height: 20.0,
                     ),
+
                     // This Container Is Used For Input
                     Container(
                       padding: EdgeInsets.all(10.0),
@@ -82,6 +84,7 @@ class _ButtonsState extends State<Buttons> {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
+
                     //This Container Is Used For Output
                     Container(
                       padding: EdgeInsets.all(10.0),
@@ -106,7 +109,7 @@ class _ButtonsState extends State<Buttons> {
                   gridDelegate: (SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4)),
                   itemBuilder: (BuildContext context, int index) {
-                    // This Statement Used For Clear Button
+                    // This Statement For Clear Button
                     if (index == 0) {
                       return CalcButtons(
                         buttonTapped: () {
@@ -118,7 +121,8 @@ class _ButtonsState extends State<Buttons> {
                         color: Color(0xFFFFB927),
                         textColor: Color(0xFFFDFDFC),
                       );
-                      // This Statement Used For Delete Button
+
+                      // This Statement Used For Delete (⌫) Button
                     } else if (index == 1) {
                       return CalcButtons(
                         buttonTapped: () {
@@ -129,37 +133,40 @@ class _ButtonsState extends State<Buttons> {
                           });
                         },
                         buttonText: buttons[index],
-                        color: Color(0xFFE4E8EA),
-                        textColor: Color(0xFF869196),
-                      );
-                    }
-                    // Equal Button
-                    else if (index == buttons.length - 1) {
-                      return SizedBox(
-                        child: CalcButtons(
-                          buttonTapped: () {
-                            setState(() {
-                              equalPressed();
-                            });
-                          },
-                          buttonText: buttons[index],
-                          color: Color(0xFF8A31DA),
-                          textColor: Colors.white,
-                        ),
+                        color: Color(0xFFF4F2E9),
+                        textColor: Color(0xFFD2C6A7),
                       );
                     }
 
-                    // This Statement Used For parenthesis()
-                    else if (index == 1) {
+                    // Equal Button
+                    else if (index == buttons.length - 1) {
                       return CalcButtons(
                         buttonTapped: () {
                           setState(() {
-                            // parenthesisPressed();
+                            equalPressed();
                           });
                         },
+                        buttonText: buttons[index],
+                        color: Color(0xFF8A31DA),
+                        textColor: Colors.white,
                       );
                     }
-                    // This Statement Used For Reset
+
+                    // This Statement Used For Parentheses Button
+                    else if (index == buttons.length - 1) {
+                      return CalcButtons(
+                        buttonTapped: () {
+                          setState(() {
+                            userInput = userInput + buttons[index];
+                          });
+                        },
+                        buttonText: buttons[index],
+                        color: Color(0xFFF4F2E9),
+                        textColor: Color(0xFFD2C6A7),
+                      );
+                    }
+
+                    // Other Buttons
                     else {
                       return CalcButtons(
                         buttonTapped: () {
@@ -167,7 +174,8 @@ class _ButtonsState extends State<Buttons> {
                             userInput = userInput + buttons[index];
                           });
                         },
-                        // Number Buttons
+
+                        // Number Buttons Colors
                         buttonText: buttons[index],
                         color: isOperator(buttons[index])
                             ? Color(0xFFDFD5ED)
@@ -189,7 +197,7 @@ class _ButtonsState extends State<Buttons> {
 
 //The Boolean Statement Used For Different The Colors (/),(%)Button From Other Operators
   bool isOperator(String x) {
-    if (x == "/" || x == "*" || x == "-" || x == "+") {
+    if (x == "/" || x == "*" || x == "-" || x == "+" || x == "(" || x == ")") {
       return true;
     }
     return false;
@@ -198,6 +206,7 @@ class _ButtonsState extends State<Buttons> {
 //This Void Statement Used For (=) Button
   void equalPressed() {
     String finalInput = userInput;
+    //(*) Means The Last Element Is Repaeted Zero(0) or More Time
     finalInput = finalInput.replaceAll("x", "*");
     Parser p = Parser();
     Expression exp = p.parse(finalInput);
@@ -206,14 +215,15 @@ class _ButtonsState extends State<Buttons> {
     userOutput = eval.toString();
   }
 
-// //This Void Statement Used For Percentage Button
-//   void percentagePressed() {
-//     String finalInput = userInput;
-//     finalInput = finalInput.substring(userInput.length - 1);
-//     Parser p = Parser();
-//     Expression exp = p.parse(finalInput);
-//     ContextModel cm = ContextModel();
-//     double eval = exp.evaluate(EvaluationType.REAL, cm);
-//     userOutput = eval.toString();
-//   }
+//This Void Statement Used For "()" Button
+  void parenthesesPressed() {
+    String finalInput = userInput;
+    //(*) Means The Last Element Is Repaeted Zero(0) or More Time
+    finalInput = finalInput.replaceAll("x", "*");
+    Parser p = Parser();
+    Expression exp = p.parse(finalInput);
+    ContextModel cm = ContextModel();
+    double eval = exp.evaluate(EvaluationType.REAL, cm);
+    userOutput = eval.toString();
+  }
 }

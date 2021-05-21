@@ -8,6 +8,7 @@ class CalcButtons extends StatelessWidget {
   final textColor;
   final String buttonText;
   final buttonTapped;
+
   const CalcButtons({
     Key key,
     this.color,
@@ -28,7 +29,7 @@ class CalcButtons extends StatelessWidget {
               BoxShadow(
                 color: Color(0xFFD6D8DB),
                 spreadRadius: .1,
-                blurRadius: 3,
+                blurRadius: 5,
                 offset: Offset(0, 1),
               ),
             ],
