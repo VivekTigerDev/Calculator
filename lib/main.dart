@@ -140,6 +140,7 @@ class _ButtonsState extends State<Buttons> {
                     }
 
                     // This Statement Used For Parentheses Button
+
                     // ignore: unrelated_type_equality_checks
                     else if (index == buttons.toString()) {
                       return CalcButtons(
@@ -233,22 +234,3 @@ class _ButtonsState extends State<Buttons> {
     userOutput = eval.toString();
   }
 }
-// "C",
-//     "⌫",
-//     "()",
-//     "/",
-//     "9",
-//     "8",
-//     "7",
-//     "*",
-//     "6",
-//     "5",
-//     "4",
-//     "-",
-//     "3",
-//     "2",
-//     "1",
-//     "+",
-//     ".",
-//     "0",
-//     "=",
