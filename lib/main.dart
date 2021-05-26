@@ -1,8 +1,7 @@
 import 'dart:ui';
-
+import 'package:calculator/Expresson.dart';
 import 'package:calculator/calc_buttons.dart';
 import 'package:flutter/material.dart';
-
 import 'package:math_expressions/math_expressions.dart';
 
 void main() {
@@ -33,28 +32,30 @@ class Buttons extends StatefulWidget {
 class _ButtonsState extends State<Buttons> {
   var userInput = "";
   var userOutput = "";
+
   //Array of button
   final List<String> buttons = [
     "C",
     "⌫",
-    "()",
-    "/",
+    "(",
+    ")",
     "9",
     "8",
     "7",
-    "*",
+    "/",
     "6",
     "5",
     "4",
-    "-",
+    "*",
     "3",
     "2",
     "1",
-    "+",
+    "-",
     ".",
     "0",
+    "+",
     "=",
-  ]; //⌫
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +139,21 @@ class _ButtonsState extends State<Buttons> {
                       );
                     }
 
+                    // This Statement Used For Parentheses Button
+                    // ignore: unrelated_type_equality_checks
+                    else if (index == buttons.toString()) {
+                      return CalcButtons(
+                        buttonTapped: () {
+                          setState(() {
+                            parenthesesPressed();
+                          });
+                        },
+                        buttonText: buttons[index],
+                        color: Color(0xFFF4F2E9),
+                        textColor: Color(0xFFD2C6A7),
+                      );
+                    }
+
                     // Equal Button
                     else if (index == buttons.length - 1) {
                       return CalcButtons(
@@ -149,20 +165,6 @@ class _ButtonsState extends State<Buttons> {
                         buttonText: buttons[index],
                         color: Color(0xFF8A31DA),
                         textColor: Colors.white,
-                      );
-                    }
-
-                    // This Statement Used For Parentheses Button
-                    else if (index == buttons.length - 1) {
-                      return CalcButtons(
-                        buttonTapped: () {
-                          setState(() {
-                            userInput = userInput + buttons[index];
-                          });
-                        },
-                        buttonText: buttons[index],
-                        color: Color(0xFFF4F2E9),
-                        textColor: Color(0xFFD2C6A7),
                       );
                     }
 
@@ -203,11 +205,14 @@ class _ButtonsState extends State<Buttons> {
     return false;
   }
 
-//This Void Statement Used For (=) Button
-  void equalPressed() {
+//This Void Statement Used For "()" Button
+  void parenthesesPressed() {
     String finalInput = userInput;
-    //(*) Means The Last Element Is Repaeted Zero(0) or More Time
-    finalInput = finalInput.replaceAll("x", "*");
+
+    String string;
+    buildParser();
+    var characters = finalInput.matchAsPrefix(string);
+    finalInput = characters as String;
     Parser p = Parser();
     Expression exp = p.parse(finalInput);
     ContextModel cm = ContextModel();
@@ -215,9 +220,10 @@ class _ButtonsState extends State<Buttons> {
     userOutput = eval.toString();
   }
 
-//This Void Statement Used For "()" Button
-  void parenthesesPressed() {
+//This Void Statement Used For (=) Button
+  void equalPressed() {
     String finalInput = userInput;
+
     //(*) Means The Last Element Is Repaeted Zero(0) or More Time
     finalInput = finalInput.replaceAll("x", "*");
     Parser p = Parser();
@@ -227,3 +233,22 @@ class _ButtonsState extends State<Buttons> {
     userOutput = eval.toString();
   }
 }
+// "C",
+//     "⌫",
+//     "()",
+//     "/",
+//     "9",
+//     "8",
+//     "7",
+//     "*",
+//     "6",
+//     "5",
+//     "4",
+//     "-",
+//     "3",
+//     "2",
+//     "1",
+//     "+",
+//     ".",
+//     "0",
+//     "=",

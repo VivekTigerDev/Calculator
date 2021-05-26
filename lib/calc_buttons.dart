@@ -37,7 +37,7 @@ class CalcButtons extends StatelessWidget {
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
-              side: BorderSide(width: 1.1, color: Colors.white24),
+              side: BorderSide(width: 1, color: Colors.white24),
             ),
             child: new ClipRRect(
               borderRadius: BorderRadius.circular(50.0),
