@@ -75,12 +75,13 @@ class _ButtonsState extends State<Buttons> {
 
                     // This Container Is Used For Input
                     Container(
+                      width: double.infinity,
                       padding: EdgeInsets.all(10.0),
                       alignment: Alignment.topRight,
                       child: Text(
                         userInput,
                         style: TextStyle(
-                            fontSize: 55,
+                            fontSize: 60,
                             color: Color(0xFFC0C2C1),
                             fontWeight: FontWeight.bold),
                       ),
@@ -105,7 +106,10 @@ class _ButtonsState extends State<Buttons> {
             Expanded(
               flex: 2,
               child: Container(
+                width: 350,
+                height: 200,
                 child: GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: buttons.length,
                   gridDelegate: (SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4)),
@@ -225,7 +229,7 @@ class _ButtonsState extends State<Buttons> {
   void equalPressed() {
     String finalInput = userInput;
 
-    //(*) Means The Last Element Is Repaeted Zero(0) or More Time
+    //(*) Means The Last Element Is Repeated Zero(0) or More Time
     finalInput = finalInput.replaceAll("x", "*");
     Parser p = Parser();
     Expression exp = p.parse(finalInput);
